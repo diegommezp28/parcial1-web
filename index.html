@@ -42,20 +42,28 @@
     <title>Parcial 1</title>
   </head>
   <body>
-    <nav class="navbar">
+    <nav class="pnavbar">
       <span class="Title">Restaurant & Lounge</span>
-      <img id="logo" src="./cart_logo.png" alt="Logo carro de compras" class="logo" />
-      <span id="items-number">0 items</span>
+      <div class="float-right">
+        <span id="items-number">0 items</span>
+      </div>
+      <div class="float-right">
+        <img
+          id="logo"
+          src="./cart_logo.png"
+          alt="Logo carro de compras"
+          class="logo"
+        />
+      </div>
     </nav>
     <hr />
     <img src="./banner.png" alt="banner" class="w-100" />
     <hr />
-    <div id="categorias" class="categorias">
-    </div>
+    <div id="categorias" class="categorias bg-dark"></div>
 
-    <hr>
+    <hr />
     <div id="nombre_categoria" class="text-center"></div>
-    <hr>
+    <hr />
     <div id="productos" class="productos"></div>
     <script src="./index.js"></script>
   </body>

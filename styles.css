@@ -1,5 +1,5 @@
-.navbar {
-  display: flex;
+.pnavbar {
+  position: relative;
   font-family: "Satisfy" !important;
   font-size: 50px !important;
   font-weight: 550;
@@ -13,10 +13,13 @@
 }
 
 #items-number {
-  align-self: flex-end;
+  margin: 4rem;
+  font-size: 29px;
 }
 
 .categorias {
+  display: flex;
+  align-items: center;
   height: 80px;
   background-color: rgb(52, 54, 66);
   margin-top: auto;
@@ -28,6 +31,8 @@
 .categorias span {
   margin: 10px;
   color: white;
+  font-size: 20px;
+  font-weight: 550;
 }
 
 .categorias span:hover {
@@ -57,4 +62,11 @@
 
 .cancelar {
   align-self: flex-end;
+}
+
+.bg-dark,
+.bg-dark:active,
+.bg-dark:hover,
+.bg-dark:focus {
+  background-color: #333a40 !important;
 }

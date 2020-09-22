@@ -29,7 +29,6 @@ getRequest(URL).then(response => {
 
     response = JSON.parse(response);
     categorias = response;
-    console.log(response)
     links_categorias();
     productos();
 })
@@ -53,7 +52,6 @@ function productos() {
     nodoNombre.innerHTML = `<h2 class="font-weight-bold">${categorias[indexCategoriaSeleccionada].name}</h2>`
     let productos = categorias[indexCategoriaSeleccionada].products
 
-    console.log(productos);
     let nodoProductos = document.getElementById("productos")
     nodoProductos.innerHTML = '';
     let cont = 0;
@@ -67,7 +65,7 @@ function productos() {
                 <h5 class="card-title font-weight-bold">${producto.name}</h5>
                 <p class="card-text">${producto.description}</p>
                 <p class="font-weight-bold">$${producto.price}</p>
-                <button id='${indexCategoriaSeleccionada}-${cont}' type="button" class="btn btn-primary aniadir-carro">
+                <button id='${indexCategoriaSeleccionada}-${cont}' type="button" class="btn btn-primary aniadir-carro bg-dark">
                     Añadir al carro
                 </button>
              </div>`
@@ -89,10 +87,6 @@ function handler_boton_productos() {
     const id = this.getAttribute('id');
     carroCompras.productos[id] = carroCompras.productos[id] ? carroCompras.productos[id] + 1 : 1;
     carroCompras.numeroProductos += 1;
-
-    console.log('====================================');
-    console.log(carroCompras);
-    console.log('====================================');
 
     let nodoCarrito = document.getElementById('items-number')
     nodoCarrito.innerHTML = `${carroCompras.numeroProductos} items`;
@@ -156,16 +150,41 @@ function handler_carro_compras() {
     }
 
     htmlTabla += `
-    <div class='d-flex w-100'> 
-        <p class="font-weight-bold">Total:$${total.toPrecision(5)} </p>
-        <button  type="button" class="btn btn-primary confirmar">Confirm Order</button>
-        <button  type="button" class="btn btn-primary cancel">Cancelar</button>
+    <div class='w-100 position-relative'> 
+        <p class="font-weight-bold m-3 float-left">Total:$${total.toPrecision(5)} </p>
+        <button id='boton-confirmar'  type="button" class="btn btn-primary confirmar float-right m-3">Confirm Order</button>
+        <button  type="button" class="btn btn-primary cancel float-right m-3">Cancel</button>
     </div>
   `
     htmlTabla = htmlTabla.replace('{{replace}}', bodyTabla);
     nodoProductos.innerHTML = htmlTabla
 
+    let botonConfirmar = document.getElementById('boton-confirmar');
 
+    botonConfirmar.addEventListener('click', confirmar)
+
+
+}
+
+function confirmar() {
+
+    let cont = 0;
+    const confirmacion = [];
+
+    for (const productoId of Object.keys(carroCompras.productos)) {
+        cont += 1;
+        const qty = carroCompras.productos[productoId];
+        const producto = getProduct(productoId);
+        const price = producto.price
+        const description = producto.name
+
+        const item = {item: cont, quantity: qty, description: description, unitPrice: price};
+        confirmacion.push(item);
+    }
+    carroCompras.numeroProductos = 0;
+    carroCompras.productos = {};
+
+    console.log(confirmacion);
 
 }
 
