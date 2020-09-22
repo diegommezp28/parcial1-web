@@ -29,6 +29,11 @@
     color: white;
 }
 
+.categorias span:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
 .productos{
     position: relative;
     display: flex;
