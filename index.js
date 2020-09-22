@@ -19,7 +19,7 @@ function getRequest(url) {
 }
 
 
-const carroCompras = 0
+const carroCompras = {numeroProductos: 0}
 let categorias = []
 let indexCategoriaSeleccionada = 0;
 
@@ -30,6 +30,7 @@ getRequest(URL).then(response => {
     console.log(response)
     links_categorias();
     productos();
+    botones_productos()
 })
 
 function links_categorias() {
@@ -60,18 +61,14 @@ function productos() {
              </div>`
         nodoProductos.appendChild(div);
 
+    }
+}
 
-    // let botones = document.getElementsByClassName("aniadir-carro")
+function botones_productos() {
+    let botones = document.getElementsByClassName("aniadir-carro")
 
-    // for (const boton of botones){
-    //     botones.addEventListener("click", function(){carroCompras+=1; document.getElementById('items-number').innerText = `${carroCompras} items`}); 
-    // }
-        // div.setAttribute("class", "card");
-        // div.setAttribute("style", "width: 18rem;");
-        // let img = document.createElement("img");
-        // img.setAttribute("class", "card-img-top")
-        // img.setAttribute("src", "./cart logo.png")
-
+    for (const boton of botones) {
+        boton.addEventListener("click", function () { carroCompras.numeroProductos += 1; document.getElementById('items-number').innerText = `${carroCompras.numeroProductos} items` });
     }
 }
 
