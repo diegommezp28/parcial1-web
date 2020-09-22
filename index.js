@@ -153,15 +153,42 @@ function handler_carro_compras() {
     <div class='w-100 position-relative'> 
         <p class="font-weight-bold m-3 float-left">Total:$${total.toPrecision(5)} </p>
         <button id='boton-confirmar'  type="button" class="btn btn-primary confirmar float-right m-3">Confirm Order</button>
-        <button  type="button" class="btn btn-primary cancel float-right m-3">Cancel</button>
+        <button id='boton-cancelar' type="button" class="btn btn-danger cancel float-right m-3" 
+                data-toggle="modal" data-target="#modal"> Cancel
+        </button>
+
+        <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Cancel the order</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure about cancelling the order?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="confirmar-cancelacion" type="button" class="btn btn-danger" data-dismiss="modal">
+                            Yes, I want to cancel de order
+                        </button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">No, I want to continue adding products</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
   `
     htmlTabla = htmlTabla.replace('{{replace}}', bodyTabla);
     nodoProductos.innerHTML = htmlTabla
 
     let botonConfirmar = document.getElementById('boton-confirmar');
+    let botonConfirmarCancelacion = document.getElementById('confirmar-cancelacion')
 
-    botonConfirmar.addEventListener('click', confirmar)
+
+    botonConfirmar.addEventListener('click', confirmar);
+    botonConfirmarCancelacion.addEventListener('click', cancelar);
 
 
 }
@@ -185,6 +212,15 @@ function confirmar() {
     carroCompras.productos = {};
 
     console.log(confirmacion);
+
+}
+
+function cancelar(){
+    carroCompras.numeroProductos = 0
+    carroCompras.productos = {}
+    let nodoCarrito = document.getElementById('items-number')
+    nodoCarrito.innerHTML = `0 items`;
+    productos();
 
 }
 
