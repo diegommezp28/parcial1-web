@@ -1,51 +1,60 @@
 .navbar {
-    display: flex;
-    font-family: 'Satisfy' !important;
-    font-size: 50px !important;
-    font-weight: 550;
+  display: flex;
+  font-family: "Satisfy" !important;
+  font-size: 50px !important;
+  font-weight: 550;
 }
 
-.logo{
-    width: 50px;
-    height: auto;
-    align-self: flex-end;
+.logo {
+  width: 50px;
+  height: auto;
+  align-self: flex-end;
+  cursor: pointer;
 }
 
-#items-number{
-    align-self: flex-end;
+#items-number {
+  align-self: flex-end;
 }
 
-.categorias{
-    height: 80px;
-    background-color: rgb(52, 54, 66);
-    margin-top: auto;
-    margin-bottom: auto;
-    padding-top: auto;
-    padding-bottom: auto;
+.categorias {
+  height: 80px;
+  background-color: rgb(52, 54, 66);
+  margin-top: auto;
+  margin-bottom: auto;
+  padding-top: auto;
+  padding-bottom: auto;
 }
 
-.categorias span{
-    margin: 10px;
-    color: white;
+.categorias span {
+  margin: 10px;
+  color: white;
 }
 
-.categorias span:hover{
-    cursor: pointer;
-    text-decoration: underline;
+.categorias span:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
-.productos{
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: stretch;
+.productos {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
 }
 
-.card{
-    margin: 10px;
-    position: relative;
+.card {
+  margin: 10px;
+  position: relative;
 }
 
-.aniadir-carro{
-    float: bottom;
+.aniadir-carro {
+  float: bottom;
+}
+
+.confirmar {
+  align-self: flex-end;
+}
+
+.cancelar {
+  align-self: flex-end;
 }

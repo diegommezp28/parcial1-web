@@ -18,8 +18,10 @@ function getRequest(url) {
     return promise;
 }
 
+let nodoCarroCompras = document.getElementById("logo");
+nodoCarroCompras.addEventListener('click', handler_carro_compras)
 
-const carroCompras = {numeroProductos: 0}
+const carroCompras = { numeroProductos: 0, productos: {} }
 let categorias = []
 let indexCategoriaSeleccionada = 0;
 
@@ -48,7 +50,7 @@ function links_categorias() {
 
 function productos() {
     let nodoNombre = document.getElementById('nombre_categoria');
-    nodoNombre.innerHTML = `<h2>${categorias[indexCategoriaSeleccionada].name}</h2>`
+    nodoNombre.innerHTML = `<h2 class="font-weight-bold">${categorias[indexCategoriaSeleccionada].name}</h2>`
     let productos = categorias[indexCategoriaSeleccionada].products
 
     console.log(productos);
@@ -62,7 +64,7 @@ function productos() {
         div.innerHTML = `  
         <img class="card-img-top" src="${producto.image}")>
             <div class="card-body">
-                <h5 class="card-title">${producto.name}</h5>
+                <h5 class="card-title font-weight-bold">${producto.name}</h5>
                 <p class="card-text">${producto.description}</p>
                 <p class="font-weight-bold">$${producto.price}</p>
                 <button id='${indexCategoriaSeleccionada}-${cont}' type="button" class="btn btn-primary aniadir-carro">
@@ -83,32 +85,92 @@ function botones_productos() {
     }
 }
 
-function handler_boton_productos(){
-    const id = this.getAttribute('id')
-    // const [categoria, producto] = id.split('-');
-    // console.log('====================================');
-    // console.log(categorias[categoria].products[producto]);
-    // console.log('====================================');
-
-    carroCompras[id] = carroCompras[id]? carroCompras[id] + 1: 1;
+function handler_boton_productos() {
+    const id = this.getAttribute('id');
+    carroCompras.productos[id] = carroCompras.productos[id] ? carroCompras.productos[id] + 1 : 1;
+    carroCompras.numeroProductos += 1;
 
     console.log('====================================');
     console.log(carroCompras);
     console.log('====================================');
 
-    carroCompras.numeroProductos += 1;
     let nodoCarrito = document.getElementById('items-number')
     nodoCarrito.innerHTML = `${carroCompras.numeroProductos} items`;
 
 }
 
-function handler_categorias(){
+function handler_categorias() {
     const nodo_actual = this
     const id = nodo_actual.getAttribute('id');
     const index = Number(id.split('-')[1])
 
     indexCategoriaSeleccionada = index;
-    productos(); 
+    productos();
 
+}
+
+function handler_carro_compras() {
+    let nodoNombre = document.getElementById('nombre_categoria');
+    nodoNombre.innerHTML = `<h2 class="font-weight-bold">Order Detail</h2>`
+
+    let nodoProductos = document.getElementById("productos")
+    nodoProductos.innerHTML = '';
+
+    let htmlTabla = ` 
+    <table class="table table-striped ">
+        <thead>
+            <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Qty</th>
+                <th scope="col">Description</th>
+                <th scope="col">Unit price</th>
+                <th scope="col">Amount</th>
+            </tr>
+        </thead>
+    <tbody>
+    {{replace}}
+    </tbody>
+  </table>`;
+
+    let bodyTabla = ''
+    let cont = 0;
+    let total = 0;
+
+    for (const productoId of Object.keys(carroCompras.productos)) {
+        cont += 1;
+        const qty = carroCompras.productos[productoId];
+        const producto = getProduct(productoId);
+        const price = producto.price
+        const amount = price * qty;
+        const description = producto.name
+        bodyTabla += `
+      <tr>
+        <th scope="row">${cont}</th>
+        <td>${qty}</td>
+        <td>${description}</td>
+        <td>${price}</td>
+        <td>${amount}</td>
+      </tr>
+      `
+        total += amount;
+    }
+
+    htmlTabla += `
+    <div class='d-flex w-100'> 
+        <p class="font-weight-bold">Total:$${total.toPrecision(5)} </p>
+        <button  type="button" class="btn btn-primary confirmar">Confirm Order</button>
+        <button  type="button" class="btn btn-primary cancel">Cancelar</button>
+    </div>
+  `
+    htmlTabla = htmlTabla.replace('{{replace}}', bodyTabla);
+    nodoProductos.innerHTML = htmlTabla
+
+
+
+}
+
+function getProduct(id) {
+    const [categoria, producto] = id.split('-');
+    return categorias[categoria].products[producto];
 }
 
