@@ -65,7 +65,7 @@ function productos() {
                 <h5 class="card-title font-weight-bold">${producto.name}</h5>
                 <p class="card-text">${producto.description}</p>
                 <p class="font-weight-bold">$${producto.price}</p>
-                <button id='${indexCategoriaSeleccionada}-${cont}' type="button" class="btn btn-primary aniadir-carro bg-dark">
+                <button id='${indexCategoriaSeleccionada}-${cont}' type="button" class="btn btn-dark aniadir-carro bg-dark">
                     Añadir al carro
                 </button>
              </div>`
@@ -170,10 +170,10 @@ function handler_carro_compras() {
                         <p>Are you sure about cancelling the order?</p>
                     </div>
                     <div class="modal-footer">
-                        <button id="confirmar-cancelacion" type="button" class="btn btn-danger" data-dismiss="modal">
+                        <button id="confirmar-cancelacion" type="button" class="btn btn-light" data-dismiss="modal">
                             Yes, I want to cancel de order
                         </button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">No, I want to continue adding products</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">No, I want to continue adding products</button>
                     </div>
                 </div>
             </div>
