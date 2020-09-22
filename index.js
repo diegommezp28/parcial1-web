@@ -68,7 +68,14 @@ function botones_productos() {
     let botones = document.getElementsByClassName("aniadir-carro")
 
     for (const boton of botones) {
-        boton.addEventListener("click", function () { carroCompras.numeroProductos += 1; document.getElementById('items-number').innerText = `${carroCompras.numeroProductos} items` });
+        boton.addEventListener("click", handler_boton_productos);
     }
+}
+
+function handler_boton_productos(){
+    carroCompras.numeroProductos += 1;
+    let nodoCarrito = document.getElementById('items-number')
+    nodoCarrito.innerHTML = `${carroCompras.numeroProductos} items`;
+
 }
 
