@@ -21,7 +21,7 @@ function getRequest(url) {
 
 const carroCompras = {numeroProductos: 0}
 let categorias = []
-let indexCategoriaSeleccionada = 4;
+let indexCategoriaSeleccionada = 0;
 
 getRequest(URL).then(response => {
 
@@ -30,7 +30,6 @@ getRequest(URL).then(response => {
     console.log(response)
     links_categorias();
     productos();
-    botones_productos()
 })
 
 function links_categorias() {
@@ -55,20 +54,25 @@ function productos() {
     console.log(productos);
     let nodoProductos = document.getElementById("productos")
     nodoProductos.innerHTML = '';
+    let cont = 0;
     for (const producto of productos) {
         let div = document.createElement("div");
         div.setAttribute("class", "card");
-        div.setAttribute("style", "width: 18rem;");
+        div.setAttribute("style", "width: 23%;");
         div.innerHTML = `  
         <img class="card-img-top" src="${producto.image}")>
             <div class="card-body">
                 <h5 class="card-title">${producto.name}</h5>
                 <p class="card-text">${producto.description}</p>
-                <button type="button" class="btn btn-primary aniadir-carro">Añadir al carro</button>
+                <p class="font-weight-bold">$${producto.price}</p>
+                <button id='${indexCategoriaSeleccionada}-${cont}' type="button" class="btn btn-primary aniadir-carro">
+                    Añadir al carro
+                </button>
              </div>`
         nodoProductos.appendChild(div);
-
+        cont += 1;
     }
+    botones_productos();
 }
 
 function botones_productos() {
@@ -80,8 +84,18 @@ function botones_productos() {
 }
 
 function handler_boton_productos(){
-    console.log('This: ');
-    console.log(this)
+    const id = this.getAttribute('id')
+    // const [categoria, producto] = id.split('-');
+    // console.log('====================================');
+    // console.log(categorias[categoria].products[producto]);
+    // console.log('====================================');
+
+    carroCompras[id] = carroCompras[id]? carroCompras[id] + 1: 1;
+
+    console.log('====================================');
+    console.log(carroCompras);
+    console.log('====================================');
+
     carroCompras.numeroProductos += 1;
     let nodoCarrito = document.getElementById('items-number')
     nodoCarrito.innerHTML = `${carroCompras.numeroProductos} items`;
@@ -94,7 +108,6 @@ function handler_categorias(){
     const index = Number(id.split('-')[1])
 
     indexCategoriaSeleccionada = index;
-
     productos(); 
 
 }
